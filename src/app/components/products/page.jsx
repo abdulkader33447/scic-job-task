@@ -1,10 +1,36 @@
-import React from 'react';
+import dbConnect, { collectionNamesObj } from "@/lib/dbConnect";
+import Image from "next/image";
+import React from "react";
 
-const ProductsSection = () => {
+const ProductsSection = async () => {
+  const productsCollection = dbConnect(collectionNamesObj.productsCollection);
+  const data = await productsCollection.find({}).toArray();
+  console.log("form products", data);
   return (
-    <div>
+    <div className="w-full mx-auto sm:mt-60 mt-20">
       <h1>products Section</h1>
-      
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center justify-between gap-5">
+        {data.map((item) => (
+          <div key={item._id} className="card bg-base-100 w-full shadow-sm">
+            <figure className="aspect-[4/3] relative w-full">
+              <Image
+                src={item.image}
+                fill
+                alt={item.name}
+              />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">{item.name}</h2>
+              <p>
+                {item.description}
+              </p>
+              <div className="card-actions justify-end">
+                <button className="btn btn-primary">Buy Now</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
