@@ -1,19 +1,27 @@
 "use client";
+import { registerUser } from "@/app/actions/auth/registerUser";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const RegisterForm = () => {
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const data ={name,email,password}
-    console.log("form submitted",data);
+    const result = await registerUser({ name, email, password });
+    console.log("form submitted", result);
+
+    if (result?._id) {
+      router?.push("/products");
+    } else {
+      alert(result.message || "registration failed!");
+    }
   };
-  //mongodb admin pass = VW7tdwDWEaMCZPka
   return (
-    <div className="flex items-center justify-center min-h-screen ">
+    <div className="flex items-center justify-center min-h-[calc(100vh-116px)]">
       <div className="p-6 rounded shadow-md w-80 border">
         <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
