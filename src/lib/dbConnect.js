@@ -1,13 +1,13 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.NEXT_PUBLIC_MONGODB_URI;
 
 export const collectionNamesObj = {
   productsCollection: "products",
   userCollection: "users",
 };
 
-const dbConnect =async (collectionName) => {
+const dbConnect = async (collectionName) => {
   // Create a MongoClient with a MongoClientOptions object to set the Stable API version
   const client = new MongoClient(uri, {
     serverApi: {
@@ -16,7 +16,7 @@ const dbConnect =async (collectionName) => {
       deprecationErrors: true,
     },
   });
-  await client.connect()
+  await client.connect();
   return client.db(process.env.DB_NAME).collection(collectionName);
 };
 

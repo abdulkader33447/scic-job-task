@@ -15,7 +15,11 @@ const ProductsSection = async () => {
         {data.map((item) => (
           <div key={item._id} className="card bg-base-100 w-full shadow-sm">
             <figure className="aspect-[4/3] relative w-full">
-              <Image src={item.image} fill alt={item.name} />
+              <Image
+                src={item.image || "../../../../public/placeholder.png"}
+                fill
+                alt={item.name || "No name"}
+              />
             </figure>
             <div className="card-body">
               <h2 className="card-title">{item.name}</h2>

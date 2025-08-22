@@ -5,7 +5,7 @@ import React from "react";
 
 const ProductsDetailsPage = async ({ params }) => {
   const p = await params;
-  const productsCollection = dbConnect(collectionNamesObj.productsCollection);
+  const productsCollection =await dbConnect(collectionNamesObj.productsCollection);
   const data = await productsCollection.findOne({ _id: new ObjectId(p.id) });
   console.log("from detail page", data);
   return (
@@ -13,10 +13,10 @@ const ProductsDetailsPage = async ({ params }) => {
       <h1 className="text-center">Products Details Page</h1>
       <div className="w-11/12 mx-auto border p-5 sm:flex gap-10">
         <Image
-          src={data.image}
+          src={data.image || "../../../../public/placeholder.png"}
           width={500}
           height={350}
-          alt={data.name}
+          alt={data.name || "No name"}
           className="rounded"
         />
         <div className="space-y-3">
